@@ -1,4 +1,3 @@
-python
 #!/usr/bin/env python3
 """
 fetch_news.py
