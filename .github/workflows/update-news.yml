@@ -1,0 +1,47 @@
+yaml
+name: Update news
+
+on:
+  schedule:
+    # Every hour. Edit the cron expression to change frequency.
+    - cron: "0 * * * *"
+  workflow_dispatch: {}   # lets you trigger it manually from the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Cache pip packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: pip-${{ hashFiles('requirements.txt') }}
+
+      - name: Cache DeepFace model weights
+        uses: actions/cache@v4
+        with:
+          path: ~/.deepface
+          key: deepface-weights-v1
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Fetch news
+        run: python scripts/fetch_news.py
+
+      - name: Commit updated news.json
+        run: |
+          git config user.name "news-bot"
+          git config user.email "news-bot@users.noreply.github.com"
+          git add data/news.json
+          git diff --cached --quiet || git commit -m "Update news $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          git push
