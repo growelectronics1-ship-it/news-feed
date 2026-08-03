@@ -1,0 +1,22 @@
+{
+  "feeds": [
+    { "name": "Yeshiva World News", "url": "https://yeshivaworld.com/feed" },
+    { "name": "Matzav", "url": "https://matzav.com/feed" },
+    { "name": "The Lakewood Scoop", "url": "https://thelakewoodscoop.com/feed" },
+    {
+      "name": "Fox News Politics",
+      "url": "https://moxie.foxnews.com/google-publisher/politics.xml"
+    },
+    {
+      "name": "Fox News (Israel)",
+      "url": "https://moxie.foxnews.com/google-publisher/world.xml",
+      "include_keywords": [
+        "israel", "israeli", "gaza", "netanyahu", "idf", "hamas",
+        "jerusalem", "tel aviv", "hezbollah", "west bank", "knesset",
+        "antisemit", "iran nuclear", "houthi"
+      ]
+    }
+  ],
+  "max_articles_per_feed": 20,
+  "max_total_articles": 80
+}
